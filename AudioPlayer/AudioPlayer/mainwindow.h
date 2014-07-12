@@ -10,7 +10,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QString _fileName = QString();
+    QString _fileName;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -21,6 +21,8 @@ public:
 public slots:
     void loadFile();
     void play();
+    void pause();
+    void stop();
 
 private:
     Ui::MainWindow *ui;
