@@ -9,10 +9,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+   // _fileName = new QString();
     ui->setupUi(this);
     connect(ui->loadFileButton, SIGNAL(clicked()), this, SLOT(loadFile()));
     connect(ui->playButton, SIGNAL(clicked()), this, SLOT(play()));
+    connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
+    connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
+    connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
+
+
     _player = new QMediaPlayer();
+    _player->setVolume(80);
 }
 
 
@@ -35,3 +42,20 @@ void MainWindow::loadFile() {
 void MainWindow::play() {
     _player->play();
 }
+
+
+void MainWindow::stop() {
+    _player->stop();
+}
+void MainWindow::pause() {
+    if(_player->state() == 2)
+        _player->play();
+    else
+        _player->pause();
+}
+
+void MainWindow::changeVolume(){
+    int vol = ui->volumeSlider->value();
+    _player->setVolume(vol);
+}
+

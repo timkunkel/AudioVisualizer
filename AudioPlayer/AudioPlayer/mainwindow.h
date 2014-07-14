@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
+#include <QMediaPlayer>
+#include <QSlider>
+#include "fmod.h"
 
 namespace Ui {
 class MainWindow;
@@ -10,7 +14,7 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QString _fileName = QString();
+    QString _fileName;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -21,6 +25,9 @@ public:
 public slots:
     void loadFile();
     void play();
+    void stop();
+    void pause();
+    void changeVolume();
 
 private:
     Ui::MainWindow *ui;

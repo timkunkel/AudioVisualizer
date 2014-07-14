@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>png/four30.png</file>
         <file>png/play43.png</file>
+        <file>png/pause15.png</file>
+        <file>png/square64.png</file>
     </qresource>
 </RCC>
