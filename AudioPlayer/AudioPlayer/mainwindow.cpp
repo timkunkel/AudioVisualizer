@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMediaPlayer>
+#include <QQuickWidget>
 
 QMediaPlayer* _player;
 
@@ -10,7 +11,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
    // _fileName = new QString();
+    QUrl source("../AudioPlayer/rotationsquare.qml");
+    QQuickWidget* quickWid = new QQuickWidget();
+    quickWid->setSource(source);
     ui->setupUi(this);
+    ui->mdiArea->addSubWindow(quickWid);
+
+
+    quickWid->show();
+
     connect(ui->loadFileButton, SIGNAL(clicked()), this, SLOT(loadFile()));
     connect(ui->playButton, SIGNAL(clicked()), this, SLOT(play()));
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));

@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += multimedia
+QT       += quickwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,7 +24,5 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     appicons.qrc
 
-unix|win32: LIBS += -L$$PWD/../../../../../fmod/api/lib/ -lfmodex_vc
-
-INCLUDEPATH += $$PWD/../../../../../fmod/api/inc
-DEPENDPATH += $$PWD/../../../../../fmod/api/inc
+OTHER_FILES += \
+    rotationsquare.qml
