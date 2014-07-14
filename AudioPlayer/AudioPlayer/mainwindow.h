@@ -5,7 +5,6 @@
 #include <QFileDialog>
 #include <QMediaPlayer>
 #include <QSlider>
-#include "fmod.h"
 
 namespace Ui {
 class MainWindow;

@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMediaPlayer>
+#include <fmod.h>
 
 QMediaPlayer* _player;
 
