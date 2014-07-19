@@ -28,7 +28,8 @@ public slots:
     void stop();
     void pause();
     void changeVolume();
-    void processBuffer(const QAudioBuffer& buf);
+    void process();
+    void update();
     void paintEvent(QPaintEvent* e);
 
 private:

@@ -61,7 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
-    connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
+    connect(quickWid,SIGNAL(),this,SLOT(process()));
 
 
     _player = new QMediaPlayer();
@@ -81,22 +81,12 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::processBuffer(const QAudioBuffer& buf){
-   const quint8* data = buf.data<quint8>();
-   qint64 len = buf.byteCount();
-   if(len > 4096)
-       len = 4096;
-
-   for (int i=0; i < len; i++ )
-       {
-       qDebug() << data[i];
-
-       }
-
-   //qDebug()<< buf.format().;
+void MainWindow::process(){
+   qDebug() << "in process";
 }
 
 void MainWindow::loadFile() {
+
     _fileName = QFileDialog::getOpenFileName(this,
                                              tr("Open Music"),
                                              QDir::homePath(),
@@ -106,9 +96,6 @@ void MainWindow::loadFile() {
 
    QByteArray temp = _fileName.toLocal8Bit();
 
-
-
-   // _player->setMedia(QUrl(_fileName));
    qDebug()<< temp.data();
     initFMod();
     _result = _system->createSound(temp.data(), FMOD_HARDWARE, 0, &_sound);
@@ -120,6 +107,10 @@ void MainWindow::loadFile() {
 
 
 
+}
+
+void MainWindow::update(){
+    qDebug() << "Update";
 }
 
 void MainWindow::play() {
@@ -142,8 +133,6 @@ void MainWindow::play() {
 
 void MainWindow::paintEvent(QPaintEvent *){
 
-    //_system->update();
-    qDebug()<< "Update "<< i++ ;
 }
 
 void MainWindow::stop() {

@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[13];
-    char stringdata[107];
+    QByteArrayData data[12];
+    char stringdata[91];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,16 +36,15 @@ QT_MOC_LITERAL(3, 21, 4),
 QT_MOC_LITERAL(4, 26, 4),
 QT_MOC_LITERAL(5, 31, 5),
 QT_MOC_LITERAL(6, 37, 12),
-QT_MOC_LITERAL(7, 50, 13),
-QT_MOC_LITERAL(8, 64, 12),
-QT_MOC_LITERAL(9, 77, 3),
-QT_MOC_LITERAL(10, 81, 10),
-QT_MOC_LITERAL(11, 92, 12),
-QT_MOC_LITERAL(12, 105, 1)
+QT_MOC_LITERAL(7, 50, 7),
+QT_MOC_LITERAL(8, 58, 6),
+QT_MOC_LITERAL(9, 65, 10),
+QT_MOC_LITERAL(10, 76, 12),
+QT_MOC_LITERAL(11, 89, 1)
     },
     "MainWindow\0loadFile\0\0play\0stop\0pause\0"
-    "changeVolume\0processBuffer\0QAudioBuffer\0"
-    "buf\0paintEvent\0QPaintEvent*\0e"
+    "changeVolume\0process\0update\0paintEvent\0"
+    "QPaintEvent*\0e"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,7 +54,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,13 +62,14 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x0a /* Public */,
-       3,    0,   50,    2, 0x0a /* Public */,
-       4,    0,   51,    2, 0x0a /* Public */,
-       5,    0,   52,    2, 0x0a /* Public */,
-       6,    0,   53,    2, 0x0a /* Public */,
-       7,    1,   54,    2, 0x0a /* Public */,
-      10,    1,   57,    2, 0x0a /* Public */,
+       1,    0,   54,    2, 0x0a /* Public */,
+       3,    0,   55,    2, 0x0a /* Public */,
+       4,    0,   56,    2, 0x0a /* Public */,
+       5,    0,   57,    2, 0x0a /* Public */,
+       6,    0,   58,    2, 0x0a /* Public */,
+       7,    0,   59,    2, 0x0a /* Public */,
+       8,    0,   60,    2, 0x0a /* Public */,
+       9,    1,   61,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -77,8 +77,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 8,    9,
-    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 10,   11,
 
        0        // eod
 };
@@ -93,20 +94,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->stop(); break;
         case 3: _t->pause(); break;
         case 4: _t->changeVolume(); break;
-        case 5: _t->processBuffer((*reinterpret_cast< const QAudioBuffer(*)>(_a[1]))); break;
-        case 6: _t->paintEvent((*reinterpret_cast< QPaintEvent*(*)>(_a[1]))); break;
+        case 5: _t->process(); break;
+        case 6: _t->update(); break;
+        case 7: _t->paintEvent((*reinterpret_cast< QPaintEvent*(*)>(_a[1]))); break;
         default: ;
-        }
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        switch (_id) {
-        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 5:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QAudioBuffer >(); break;
-            }
-            break;
         }
     }
 }
@@ -136,13 +127,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        if (_id < 8)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 8;
     }
     return _id;
 }

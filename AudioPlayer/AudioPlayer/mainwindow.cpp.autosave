@@ -61,8 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
-    connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
-
+    connect(_system, Si)
+   
 
     _player = new QMediaPlayer();
     _probe->setSource(_player);
@@ -81,23 +81,12 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::processBuffer(const QAudioBuffer& buf){
-   const quint8* data = buf.data<quint8>();
-   qint64 len = buf.byteCount();
-   if(len > 4096)
-       len = 4096;
-
-   for (int i=0; i < len; i++ )
-       {
-       qDebug() << data[i];
-
-       }
-
-   //qDebug()<< buf.format().;
+void MainWindow::process(){
+   qDebug() << "in process";
 }
 
 void MainWindow::loadFile() {
-    
+
     _fileName = QFileDialog::getOpenFileName(this,
                                              tr("Open Music"),
                                              QDir::homePath(),
@@ -118,6 +107,10 @@ void MainWindow::loadFile() {
 
 
 
+}
+
+void MainWindow::update(){
+    qDebug() << "Update";
 }
 
 void MainWindow::play() {
