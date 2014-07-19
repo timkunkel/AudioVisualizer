@@ -7,14 +7,27 @@
 #include <QAudioProbe>
 #include <iostream>
 #include <QtGlobal>
+//#include <fmod.hpp>
+//#include <fmod.h>
+
 
 
 QMediaPlayer* _player;
 QAudioInput* audioInput;
 QAudioProbe* _probe;
 
+//FMOD::System *_system;
+//FMOD::Sound *_sound;
+//FMOD::Channel *_channel;
+//FMOD_RESULT _result;
 
-void Testmethod(){
+
+
+
+void initFMod(){
+     _channel = 0;
+     _system->init(32, FMOD_INIT_NORMAL,0);
+     FMOD::System_Create(&_system);
 
 
     }
@@ -23,6 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+//    initFMod();
    // _fileName = new QString();
     QUrl source("../AudioPlayer/rotationsquare.qml");
     QQuickWidget* quickWid = new QQuickWidget();
@@ -41,10 +56,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
     connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
 
+
     _player = new QMediaPlayer();
     _probe->setSource(_player);
     _player->setVolume(80);
-    qDebug()<< "Test " <<_probe->isActive();
+
 }
 
 
@@ -53,11 +69,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+
 void MainWindow::processBuffer(const QAudioBuffer& buf){
    const quint8* data = buf.data<quint8>();
    qint64 len = buf.byteCount();
-   if(len > 4096)
-       len = 4096;
+   if(len > 50)
+       len = 50;
 
    for (int i=0; i < len; i++ )
        {
@@ -76,11 +94,22 @@ void MainWindow::loadFile() {
     if (_fileName.isEmpty())
         return;
 
-    _player->setMedia(QUrl(_fileName));
+   QByteArray temp = _fileName.toLocal8Bit();
+
+
+
+   _player->setMedia(QUrl(_fileName));
+//   qDebug()<< temp.data();
+//    _system->createSound(temp.data(), FMOD_HARDWARE, 0, &_sound);
+
 }
 
 void MainWindow::play() {
     _player->play();
+//    _sound->setMode(FMOD_LOOP_OFF);
+//    _system->playSound(FMOD_CHANNEL_FREE, _sound, false, &_channel);
+
+
 }
 
 

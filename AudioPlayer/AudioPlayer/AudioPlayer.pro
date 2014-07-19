@@ -27,3 +27,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     rotationsquare.qml
+
+win32: LIBS += -L$$PWD/../../../../../fmod/api/lib/ -lfmodex_vc
+
+INCLUDEPATH += $$PWD/../../../../../fmod/api/inc
+DEPENDPATH += $$PWD/../../../../../fmod/api/inc
