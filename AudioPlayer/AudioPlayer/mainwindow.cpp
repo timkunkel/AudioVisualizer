@@ -7,6 +7,7 @@
 #include <QAudioProbe>
 #include <iostream>
 #include <QtGlobal>
+#include <QDebug>
 //#include <fmod.hpp>
 //#include <fmod.h>
 
@@ -25,12 +26,10 @@ QAudioProbe* _probe;
 
 
 void initFMod(){
-     _channel = 0;
-     _system->init(32, FMOD_INIT_NORMAL,0);
-     FMOD::System_Create(&_system);
-
-
-    }
+//     _channel = 0;
+//     _system->init(32, FMOD_INIT_NORMAL,0);
+//     FMOD::System_Create(&_system);
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -41,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
    // _fileName = new QString();
     QUrl source("../AudioPlayer/rotationsquare.qml");
     QQuickWidget* quickWid = new QQuickWidget();
+    quickWid->resize(400, 400);
+    quickWid->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWid->setSource(source);
     ui->setupUi(this);
     ui->mdiArea->addSubWindow(quickWid);
@@ -80,9 +81,7 @@ void MainWindow::processBuffer(const QAudioBuffer& buf){
    for (int i=0; i < len; i++ )
        {
        qDebug() << data[i];
-
        }
-
    //qDebug()<< buf.format().;
 }
 
