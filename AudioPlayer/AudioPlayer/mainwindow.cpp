@@ -3,20 +3,23 @@
 #include <QFileDialog>
 #include <QMediaPlayer>
 #include <QQuickWidget>
+#include <QQuickItem>
 
 QMediaPlayer* _player;
+QQuickWidget* quickWid;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-   // _fileName = new QString();
+//    _fileName = new QString();
     QUrl source("../AudioPlayer/rotationsquare.qml");
-    QQuickWidget* quickWid = new QQuickWidget();
+    quickWid = new QQuickWidget();
+    quickWid->resize(300, 300);
+    quickWid->setResizeMode(QQuickWidget::SizeRootObjectToView);
     quickWid->setSource(source);
     ui->setupUi(this);
     ui->mdiArea->addSubWindow(quickWid);
-
 
     quickWid->show();
 
@@ -50,6 +53,10 @@ void MainWindow::loadFile() {
 
 void MainWindow::play() {
     _player->play();
+    QObject *object = quickWid->rootObject();
+    object->children().at(0)->setProperty("color", "black"); // set color of rotating rectangle
+    object->children().at(1)->setProperty("color", "yellow");
+    object->children().at(0)->setProperty("x", 400);
 }
 
 
