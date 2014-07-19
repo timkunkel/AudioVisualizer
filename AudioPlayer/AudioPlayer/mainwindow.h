@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMediaPlayer>
 #include <QSlider>
+#include <QAudioProbe>
 
 namespace Ui {
 class MainWindow;
@@ -27,6 +28,7 @@ public slots:
     void stop();
     void pause();
     void changeVolume();
+    void processBuffer(const QAudioBuffer& buf);
 
 private:
     Ui::MainWindow *ui;

@@ -3,8 +3,21 @@
 #include <QFileDialog>
 #include <QMediaPlayer>
 #include <QQuickWidget>
+#include <QAudioInput>
+#include <QAudioProbe>
+#include <iostream>
+#include <QtGlobal>
+
 
 QMediaPlayer* _player;
+QAudioInput* audioInput;
+QAudioProbe* _probe;
+
+
+void Testmethod(){
+
+
+    }
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->mdiArea->addSubWindow(quickWid);
 
+    _probe = new QAudioProbe();
 
     quickWid->show();
 
@@ -25,16 +39,33 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
-
+    connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
 
     _player = new QMediaPlayer();
+    _probe->setSource(_player);
     _player->setVolume(80);
+    qDebug()<< "Test " <<_probe->isActive();
 }
 
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::processBuffer(const QAudioBuffer& buf){
+   const quint8* data = buf.data<quint8>();
+   qint64 len = buf.byteCount();
+   if(len > 4096)
+       len = 4096;
+
+   for (int i=0; i < len; i++ )
+       {
+       qDebug() << data[i];
+
+       }
+
+   //qDebug()<< buf.format().;
 }
 
 void MainWindow::loadFile() {
