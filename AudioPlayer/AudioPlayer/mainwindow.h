@@ -29,6 +29,16 @@ public slots:
     void pause();
     void changeVolume();
     void processBuffer(const QAudioBuffer& buf);
+    void loadMp3();
+    void loadAndPlayMp3();
+    void playNext();
+    void updateStatus(qint64 i);
+    void seekToPosition(int i);
+    void loadFolder();
+    void next();
+    void previous();
+    void jump(const QModelIndex& index);
+
 
 private:
     Ui::MainWindow *ui;

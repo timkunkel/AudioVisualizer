@@ -5,5 +5,7 @@
         <file>png/pause15.png</file>
         <file>png/square64.png</file>
         <file>rotationsquare.qml</file>
+        <file>png/next10.png</file>
+        <file>png/back12.png</file>
     </qresource>
 </RCC>

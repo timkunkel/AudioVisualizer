@@ -29,25 +29,72 @@
      </property>
      <item row="1" column="0">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="2">
-        <widget class="QPushButton" name="playButton">
+       <item row="0" column="0" colspan="9">
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="3" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="loadFolderButton">
+             <property name="text">
+              <string>Load Folder</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="loadFileButton">
+             <property name="text">
+              <string>Load Music File</string>
+             </property>
+             <property name="icon">
+              <iconset resource="appicons.qrc">
+               <normaloff>:/png/four30.png</normaloff>:/png/four30.png</iconset>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0">
+          <widget class="QListWidget" name="mp3List"/>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="6">
+        <widget class="QPushButton" name="next">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="appicons.qrc">
-           <normaloff>:/png/play43.png</normaloff>:/png/play43.png</iconset>
+           <normaloff>:/png/next10.png</normaloff>:/png/next10.png</iconset>
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QPushButton" name="stopButton">
+       <item row="3" column="2">
+        <widget class="QPushButton" name="previous">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
           <iconset resource="appicons.qrc">
-           <normaloff>:/png/square64.png</normaloff>:/png/square64.png</iconset>
+           <normaloff>:/png/back12.png</normaloff>:/png/back12.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <widget class="QPushButton" name="pauseButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/pause15.png</normaloff>:/png/pause15.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Volume</string>
          </property>
         </widget>
        </item>
@@ -61,7 +108,29 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="5">
+       <item row="3" column="4">
+        <widget class="QPushButton" name="stopButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/square64.png</normaloff>:/png/square64.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QPushButton" name="playButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/play43.png</normaloff>:/png/play43.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="7">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -74,39 +143,14 @@
          </property>
         </spacer>
        </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QPushButton" name="loadFileButton">
-         <property name="text">
-          <string>Load Music File</string>
-         </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/four30.png</normaloff>:/png/four30.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Volume</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="4">
-        <widget class="QPushButton" name="pauseButton">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/pause15.png</normaloff>:/png/pause15.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="5">
-        <widget class="QMdiArea" name="mdiArea"/>
-       </item>
       </layout>
+     </item>
+     <item row="2" column="0">
+      <widget class="QSlider" name="position">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
