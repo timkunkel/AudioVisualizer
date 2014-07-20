@@ -7,5 +7,7 @@
         <file>rotationsquare.qml</file>
         <file>png/next10.png</file>
         <file>png/back12.png</file>
+        <file>png/intersecting4.png</file>
+        <file>png/two122.png</file>
     </qresource>
 </RCC>

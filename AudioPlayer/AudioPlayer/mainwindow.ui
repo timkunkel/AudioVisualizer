@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>545</height>
+    <width>524</width>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,45 +58,25 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="6">
-        <widget class="QPushButton" name="next">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/next10.png</normaloff>:/png/next10.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QPushButton" name="previous">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/back12.png</normaloff>:/png/back12.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QPushButton" name="pauseButton">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/pause15.png</normaloff>:/png/pause15.png</iconset>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Volume</string>
          </property>
         </widget>
+       </item>
+       <item row="3" column="7">
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item row="3" column="1">
         <widget class="QSlider" name="volumeSlider">
@@ -128,39 +108,85 @@
           <iconset resource="appicons.qrc">
            <normaloff>:/png/play43.png</normaloff>:/png/play43.png</iconset>
          </property>
+         <property name="shortcut">
+          <string>Space</string>
+         </property>
         </widget>
        </item>
-       <item row="3" column="7">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="3" column="2">
+        <widget class="QPushButton" name="previous">
+         <property name="text">
+          <string/>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/back12.png</normaloff>:/png/back12.png</iconset>
          </property>
-        </spacer>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <widget class="QPushButton" name="next">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/next10.png</normaloff>:/png/next10.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="6">
+        <widget class="QPushButton" name="repeatButton">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/two122.png</normaloff>:/png/two122.png</iconset>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>489</y>
+      <width>501</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
       <widget class="QSlider" name="position">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QLabel" name="timeLabel">
+       <property name="text">
+        <string>00:00</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
+   <zorder>gridLayoutWidget</zorder>
+   <zorder>position</zorder>
+   <zorder>timeLabel</zorder>
+   <zorder>horizontalLayoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>525</width>
+     <width>524</width>
      <height>21</height>
     </rect>
    </property>

@@ -14,6 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = AudioPlayer
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp
@@ -27,8 +28,3 @@ RESOURCES += \
 
 OTHER_FILES += \
     rotationsquare.qml
-
-win32: LIBS += -L$$PWD/../../../../../fmod/api/lib/ -lfmodex_vc
-
-INCLUDEPATH += $$PWD/../../../../../fmod/api/inc
-DEPENDPATH += $$PWD/../../../../../fmod/api/inc

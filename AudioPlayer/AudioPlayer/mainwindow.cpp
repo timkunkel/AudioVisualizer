@@ -8,6 +8,7 @@
 #include <QAudioProbe>
 #include <iostream>
 #include <QtGlobal>
+#include <QTime>
 
 
 QMediaPlayer* _player;
@@ -34,50 +35,33 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mp3List->setDragDropMode(QAbstractItemView::InternalMove);
     quickWid->show();
 
+    _player = new QMediaPlayer();
+
     connect(ui->loadFileButton, SIGNAL(clicked()), this, SLOT(loadFile()));
     connect(ui->loadFolderButton, SIGNAL(clicked()), this, SLOT(loadFolder()));
-
     connect(ui->playButton, SIGNAL(clicked()), this, SLOT(play()));
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
-    connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
+    connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)));
     connect(ui->mp3List, SIGNAL(doubleClicked(QModelIndex)),this, SLOT(jump(QModelIndex)));
-    connect(ui->position, SIGNAL(sliderMoved(int)),this,SLOT(seekToPosition(int)));
+    connect(ui->position, SIGNAL(valueChanged(int)), this, SLOT(changePosition(int)));
     connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
     connect(ui->next,SIGNAL(clicked()),this,SLOT(next()));
     connect(ui->previous,SIGNAL(clicked()),this,SLOT(previous()));
+    connect(_player,SIGNAL(positionChanged(qint64)), this, SLOT(musicPositionChanged(qint64)));
+    connect(_player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(updateButtonIcons(QMediaPlayer::State)));
+    connect(ui->repeatButton, SIGNAL(clicked()), this, SLOT(changePlaybackMode()));
 
-
-    _player = new QMediaPlayer();
     _playlist = new QMediaPlaylist();
     _probe->setSource(_player);
     _player->setVolume(80);
-    ui->position->setRange(0,10000);
 
     _player->setPlaylist(_playlist);
-
-
-
-    connect(_player,SIGNAL(positionChanged(qint64)),this,SLOT(updateStatus(qint64)));
 }
 
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
     delete ui;
-}
-
-
-void MainWindow::seekToPosition(int i){
-
-    _player->setPosition( i * _player->duration()/10000);
-}
-
-void MainWindow::updateStatus(qint64 i){
-
-
-       ui->position->setValue(i * 10000/_player->duration());
-
 }
 
 void MainWindow::processBuffer(const QAudioBuffer& buf){
@@ -89,9 +73,7 @@ void MainWindow::processBuffer(const QAudioBuffer& buf){
    for (int i=0; i < len; i++ )
        {
      //  qDebug() << data[i];
-
        }
-
 }
 
 void MainWindow::playNext(){
@@ -104,14 +86,11 @@ void MainWindow::playNext(){
 void MainWindow::loadAndPlayMp3(){
     _player->setMedia(QUrl(ui->mp3List->currentItem()->text()));
     _player->play();
-
 }
 
 
 void MainWindow::loadMp3(){
-
     _player->setMedia(QUrl(ui->mp3List->currentItem()->text()));
-
 }
 
 void MainWindow::loadFolder(){
@@ -145,16 +124,16 @@ void MainWindow::loadFile() {
     _playlist->addMedia(QUrl(_fileName));
 
     ui->mp3List->addItem(new QListWidgetItem(_fileName));
-
-
 }
 
 void MainWindow::play() {
-
-    _player->play();
+    if (_player->state() == QMediaPlayer::PlayingState){
+        _player->pause();
+    }
+    else {
+        _player->play();
+    }
 }
-
-
 
 void MainWindow::next(){
     _playlist->next();
@@ -177,15 +156,44 @@ void MainWindow::jump(const QModelIndex& index){
 void MainWindow::stop() {
     _player->stop();
 }
-void MainWindow::pause() {
-    if(_player->state() == 2)
-        _player->play();
-    else
-        _player->pause();
-}
 
 void MainWindow::changeVolume(){
     int vol = ui->volumeSlider->value();
     _player->setVolume(vol);
 }
 
+void MainWindow::musicPositionChanged(qint64 position){
+    QTime duration(0, position / 60000, qRound((position % 60000) / 1000.0));
+    ui->timeLabel->setText(duration.toString(tr("mm:ss")));
+    ui->position->setValue(position);
+}
+
+void MainWindow::updateDuration(qint64 duration){
+    ui->position->setRange(0, duration);
+    ui->position->setEnabled(duration > 0);
+    ui->position->setPageStep(duration / 10);
+}
+
+void MainWindow::changePosition(int position){
+    if (qAbs(_player->position() - position) > 99)
+        _player->setPosition(position);
+}
+
+void MainWindow::updateButtonIcons(QMediaPlayer::State state){
+    if(state == QMediaPlayer::PlayingState)
+        ui->playButton->setIcon(QIcon(":png/pause15.png"));
+
+    else
+        ui->playButton->setIcon(QIcon(":/png/play43.png"));
+}
+
+void MainWindow::changePlaybackMode() {
+    if(_playlist->playbackMode() == QMediaPlaylist::PlaybackMode::Loop){
+        _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Random);
+        ui->repeatButton->setIcon(QIcon(":/png/intersecting4.png"));
+    }
+    else {
+        _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Loop);
+        ui->repeatButton->setIcon(QIcon(":/png/two122.png"));
+    }
+}
