@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
-    <height>545</height>
+    <width>987</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>521</width>
+      <width>451</width>
       <height>491</height>
      </rect>
     </property>
@@ -29,14 +29,16 @@
      </property>
      <item row="1" column="0">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="2">
-        <widget class="QPushButton" name="playButton">
-         <property name="text">
-          <string/>
+       <item row="0" column="2" colspan="3">
+        <widget class="QListView" name="listView">
+         <property name="dragEnabled">
+          <bool>true</bool>
          </property>
-         <property name="icon">
-          <iconset resource="appicons.qrc">
-           <normaloff>:/png/play43.png</normaloff>:/png/play43.png</iconset>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDrop</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::MoveAction</enum>
          </property>
         </widget>
        </item>
@@ -51,44 +53,14 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <widget class="QSlider" name="volumeSlider">
-         <property name="value">
-          <number>80</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QPushButton" name="loadFileButton">
+       <item row="3" column="2">
+        <widget class="QPushButton" name="playButton">
          <property name="text">
-          <string>Load Music File</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="appicons.qrc">
-           <normaloff>:/png/four30.png</normaloff>:/png/four30.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Volume</string>
+           <normaloff>:/png/play43.png</normaloff>:/png/play43.png</iconset>
          </property>
         </widget>
        </item>
@@ -103,12 +75,61 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0" colspan="5">
-        <widget class="QMdiArea" name="mdiArea"/>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Volume</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSlider" name="volumeSlider">
+         <property name="value">
+          <number>80</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="loadFileButton">
+         <property name="text">
+          <string>Load Music File</string>
+         </property>
+         <property name="icon">
+          <iconset resource="appicons.qrc">
+           <normaloff>:/png/four30.png</normaloff>:/png/four30.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSlider" name="positionSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="timeLabel">
+         <property name="text">
+          <string>time</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QMdiArea" name="mdiArea">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>0</y>
+      <width>283</width>
+      <height>427</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -116,7 +137,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>525</width>
+     <width>987</width>
      <height>21</height>
     </rect>
    </property>

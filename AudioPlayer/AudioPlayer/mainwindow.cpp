@@ -2,10 +2,16 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QListView>
 #include <QQuickWidget>
 #include <QQuickItem>
+#include <QStringList>
+#include <QStringListModel>
+#include <QTime>
 
 QMediaPlayer* _player;
+QMediaPlaylist* _playList;
 QQuickWidget* quickWid;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -22,16 +28,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mdiArea->addSubWindow(quickWid);
 
     quickWid->show();
+    _player = new QMediaPlayer();
 
     connect(ui->loadFileButton, SIGNAL(clicked()), this, SLOT(loadFile()));
     connect(ui->playButton, SIGNAL(clicked()), this, SLOT(play()));
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->pauseButton, SIGNAL(clicked()), this, SLOT(pause()));
-    connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
+    connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)));
+    connect(ui->volumeSlider, SIGNAL(valueChanged(int)),this,SLOT(changeVolume()));
+    connect(ui->positionSlider, SIGNAL(valueChanged(int)), this, SLOT(changePosition(int)));
+    connect(_player, SIGNAL(positionChanged(qint64)), this, SLOT(musicPositionChanged(qint64)));
 
 
-    _player = new QMediaPlayer();
     _player->setVolume(80);
+    _playList = new QMediaPlaylist();
+    _playList->setPlaybackMode(QMediaPlaylist::Loop);
+
+    _player->setPlaylist(_playList);
+
+
+    QStringList List;
+    List << "string1" << "string2" << "string3";
+    QStringListModel* model = new QStringListModel(this);
+    model->setStringList(List);
+
 }
 
 
@@ -43,7 +63,7 @@ MainWindow::~MainWindow()
 void MainWindow::loadFile() {
     _fileName = QFileDialog::getOpenFileName(this,
                                              tr("Open Music"),
-                                             QDir::homePath(),
+                                             QDir::currentPath(),
                                              tr("Music Files (*.mp3);;"));
     if (_fileName.isEmpty())
         return;
@@ -75,3 +95,19 @@ void MainWindow::changeVolume(){
     _player->setVolume(vol);
 }
 
+void MainWindow::changePosition(int position){
+    if (qAbs(_player->position() - position) > 99)
+        _player->setPosition(position);
+}
+
+void MainWindow::musicPositionChanged(qint64 position){
+    QTime duration(0, position / 60000, qRound((position % 60000) / 1000.0));
+    ui->timeLabel->setText(duration.toString(tr("mm:ss")));
+    ui->positionSlider->setValue(position);
+}
+
+void MainWindow::updateDuration(qint64 duration){
+    ui->positionSlider->setRange(0, duration);
+    ui->positionSlider->setEnabled(duration > 0);
+    ui->positionSlider->setPageStep(duration / 10);
+}

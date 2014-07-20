@@ -27,6 +27,9 @@ public slots:
     void stop();
     void pause();
     void changeVolume();
+    void changePosition(int);
+    void musicPositionChanged(qint64);
+    void updateDuration(qint64);
 
 private:
     Ui::MainWindow *ui;

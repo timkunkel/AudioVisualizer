@@ -27,4 +27,5 @@ RESOURCES += \
     appicons.qrc
 
 OTHER_FILES += \
-    rotationsquare.qml
+    rotationsquare.qml \
+    playlistmodel.qml
