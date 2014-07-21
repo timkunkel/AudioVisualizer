@@ -10,24 +10,26 @@
 #include <QtGlobal>
 #include <QTime>
 #include <QMimeData>
+#include <QQuickItem>
 
 
 QMediaPlayer* _player;
 QMediaPlaylist* _playlist;
-
 QAudioInput* audioInput;
-
+QQuickWidget* _quickWid;
 QAudioProbe* _probe;
+QObject* _qmlObject;
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     QUrl source("../AudioPlayer/rotationsquare.qml");
-    QQuickWidget* quickWid = new QQuickWidget();
-    quickWid->setSource(source);
+    _quickWid = new QQuickWidget();
+    _quickWid->resize(400, 400);
+    _quickWid->setResizeMode(QQuickWidget::SizeRootObjectToView);
+    _quickWid->setSource(source);
     ui->setupUi(this);
     //ui->mdiArea->addSubWindow(quickWid);
 
@@ -35,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mp3List->acceptDrops();
     //ui->mp3List->setDragDropMode(QAbstractItemView::InternalMove);
     ui->mp3List->setSelectionMode(QAbstractItemView::SingleSelection);
-    quickWid->show();
+    _quickWid->show();
 
     _player = new QMediaPlayer();
     _playlist = new QMediaPlaylist();
@@ -63,6 +65,11 @@ MainWindow::MainWindow(QWidget *parent) :
     _player->setPlaylist(_playlist);
 
     this->setAcceptDrops(true);
+
+
+
+
+    _qmlObject = _quickWid->rootObject();
 }
 
 
@@ -70,7 +77,7 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-int MainWindow::processBuffer(const QAudioBuffer& buf){
+void MainWindow::processBuffer(const QAudioBuffer& buf){
    const quint8* data = buf.data<quint8>();
    qint64 len = buf.byteCount();
    if(len > 50)
@@ -78,11 +85,12 @@ int MainWindow::processBuffer(const QAudioBuffer& buf){
     int j = 0;
     int sum = 0;
 
+    qDebug() << "processbuffer";
     while(j< 81)
        sum += data[j++];
 
 
-   return sum/80;
+    _qmlObject->children().at(0)->setProperty("color", "blue");
 
 }
 

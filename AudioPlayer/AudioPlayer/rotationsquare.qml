@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Particles 2.0
 
 Rectangle {
 
@@ -18,4 +19,22 @@ Rectangle {
         anchors.centerIn: parent
         text: "Qt Quick running in a widget"
     }
+
+    ParticleSystem {
+                id: sys
+            }
+
+            Emitter {
+                anchors.fill: parent
+                system: sys
+                ImageParticle {
+                    anchors.fill: parent
+                    system: sys
+                    source: "green_melon_blob.png"
+                    clip: true
+                    id:  redblip
+                }
+
+                lifeSpan: 6000
+            }
 }
