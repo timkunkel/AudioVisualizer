@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>581</height>
+    <width>523</width>
+    <height>578</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,7 +54,14 @@
           </layout>
          </item>
          <item row="0" column="0">
-          <widget class="QListWidget" name="mp3List"/>
+          <widget class="QListWidget" name="mp3List">
+           <property name="acceptDrops">
+            <bool>true</bool>
+           </property>
+           <property name="defaultDropAction">
+            <enum>Qt::IgnoreAction</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -142,7 +149,7 @@
          </property>
          <property name="icon">
           <iconset resource="appicons.qrc">
-           <normaloff>:/png/two122.png</normaloff>:/png/two122.png</iconset>
+           <normaloff>:/png/right31.png</normaloff>:/png/right31.png</iconset>
          </property>
         </widget>
        </item>
@@ -176,17 +183,13 @@
      </item>
     </layout>
    </widget>
-   <zorder>gridLayoutWidget</zorder>
-   <zorder>position</zorder>
-   <zorder>timeLabel</zorder>
-   <zorder>horizontalLayoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>524</width>
+     <width>523</width>
      <height>21</height>
     </rect>
    </property>

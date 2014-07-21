@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QtGlobal>
 #include <QTime>
+#include <QMimeData>
 
 
 QMediaPlayer* _player;
@@ -32,10 +33,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _probe = new QAudioProbe();
     ui->mp3List->acceptDrops();
-    ui->mp3List->setDragDropMode(QAbstractItemView::InternalMove);
+    //ui->mp3List->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->mp3List->setSelectionMode(QAbstractItemView::SingleSelection);
     quickWid->show();
 
     _player = new QMediaPlayer();
+    _playlist = new QMediaPlaylist();
 
     connect(ui->loadFileButton, SIGNAL(clicked()), this, SLOT(loadFile()));
     connect(ui->loadFolderButton, SIGNAL(clicked()), this, SLOT(loadFolder()));
@@ -43,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stopButton, SIGNAL(clicked()), this, SLOT(stop()));
     connect(ui->volumeSlider, SIGNAL(sliderMoved(int)),this,SLOT(changeVolume()));
     connect(_player, SIGNAL(durationChanged(qint64)), this, SLOT(updateDuration(qint64)));
+    connect(_player, SIGNAL(currentMediaChanged(QMediaContent)), this, SLOT(updateMp3ListIndex(QMediaContent)));
     connect(ui->mp3List, SIGNAL(doubleClicked(QModelIndex)),this, SLOT(jump(QModelIndex)));
     connect(ui->position, SIGNAL(valueChanged(int)), this, SLOT(changePosition(int)));
     connect(_probe,SIGNAL(audioBufferProbed(QAudioBuffer)),this,SLOT(processBuffer(QAudioBuffer)));
@@ -51,12 +55,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(_player,SIGNAL(positionChanged(qint64)), this, SLOT(musicPositionChanged(qint64)));
     connect(_player, SIGNAL(stateChanged(QMediaPlayer::State)), this, SLOT(updateButtonIcons(QMediaPlayer::State)));
     connect(ui->repeatButton, SIGNAL(clicked()), this, SLOT(changePlaybackMode()));
+    connect(_playlist, SIGNAL(mediaInserted(int,int)), this, SLOT(updateMp3List(int, int)));
 
-    _playlist = new QMediaPlaylist();
     _probe->setSource(_player);
     _player->setVolume(80);
 
     _player->setPlaylist(_playlist);
+
+    this->setAcceptDrops(true);
 }
 
 
@@ -77,9 +83,7 @@ void MainWindow::processBuffer(const QAudioBuffer& buf){
 }
 
 void MainWindow::playNext(){
-
     _player->setMedia(QUrl(ui->mp3List->currentItem()->text()));
-
     _player->play();
 }
 
@@ -131,16 +135,27 @@ void MainWindow::play() {
         _player->pause();
     }
     else {
-        _player->play();
+        if(!_playlist->isEmpty()){
+            if(!(_playlist->currentIndex() >= 0))
+                _playlist->setCurrentIndex(0);
+
+            _player->play();
+        }
     }
 }
 
 void MainWindow::next(){
-    _playlist->next();
+    if(_playlist->currentIndex() != _playlist->mediaCount() - 1)
+        _playlist->next();
+    else
+        stop();
 }
 
 void MainWindow::previous(){
-    _playlist->previous();
+    if(_playlist->currentIndex() != 0)
+       _playlist->previous();
+    else
+        stop();
 }
 
 void MainWindow::jump(const QModelIndex& index){
@@ -189,11 +204,53 @@ void MainWindow::updateButtonIcons(QMediaPlayer::State state){
 
 void MainWindow::changePlaybackMode() {
     if(_playlist->playbackMode() == QMediaPlaylist::PlaybackMode::Loop){
+        _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::CurrentItemInLoop);
+        ui->repeatButton->setIcon(QIcon(":/png/looping1.png"));
+    }
+    else if(_playlist->playbackMode() == QMediaPlaylist::PlaybackMode::CurrentItemInLoop){
         _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Random);
         ui->repeatButton->setIcon(QIcon(":/png/intersecting4.png"));
     }
-    else {
+    else if(_playlist->playbackMode() == QMediaPlaylist::PlaybackMode::Random){
+        _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Sequential);
+        ui->repeatButton->setIcon(QIcon(":/png/right31.png"));
+    }
+    else if(_playlist->playbackMode() == QMediaPlaylist::PlaybackMode::Sequential){
         _playlist->setPlaybackMode(QMediaPlaylist::PlaybackMode::Loop);
         ui->repeatButton->setIcon(QIcon(":/png/two122.png"));
     }
+}
+
+void MainWindow::updateMp3List(int start, int end) {
+    qDebug() << "updaeteList mediacount: " << _playlist->mediaCount();
+    int index = _playlist->mediaCount() - 1;
+    qDebug() << "objectname: " << _playlist->media(index).canonicalUrl().fileName();
+    ui->mp3List->addItem(_playlist->media(index).canonicalUrl().fileName());
+}
+
+void MainWindow::updateMp3ListIndex(QMediaContent content) {
+    if(!_playlist->isEmpty())
+        ui->mp3List->item(_playlist->currentIndex())->setSelected(true);
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
+}
+
+void MainWindow::dragMoveEvent(QDragMoveEvent *event)
+{
+    event->acceptProposedAction();
+}
+
+void MainWindow::dropEvent(QDropEvent *event){
+    const QMimeData *mimeData = event->mimeData();
+    if(mimeData->hasUrls()){
+        QList<QUrl> urlList = mimeData->urls();
+        for (int i = 0; i < urlList.size() && i < 32; ++i) {
+            QUrl url = urlList.at(i).url();
+            _playlist->addMedia(QMediaContent(url));
+        }
+    }
+    event->acceptProposedAction();
 }

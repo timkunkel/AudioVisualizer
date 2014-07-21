@@ -22,6 +22,9 @@ public:
     ~MainWindow();
     void fileName(QString name) { _fileName = name; }
     QString fileName() { return _fileName; }
+    void dropEvent(QDropEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
 
 public slots:
     void loadFile();
@@ -41,6 +44,8 @@ public slots:
     void changePosition(int position);
     void updateButtonIcons(QMediaPlayer::State state);
     void changePlaybackMode();
+    void updateMp3List(int, int);
+    void updateMp3ListIndex(QMediaContent);
 
 private:
     Ui::MainWindow *ui;

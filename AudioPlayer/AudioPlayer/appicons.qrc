@@ -9,5 +9,7 @@
         <file>png/back12.png</file>
         <file>png/intersecting4.png</file>
         <file>png/two122.png</file>
+        <file>png/right31.png</file>
+        <file>png/looping1.png</file>
     </qresource>
 </RCC>
