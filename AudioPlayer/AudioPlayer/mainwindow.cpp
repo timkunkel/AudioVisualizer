@@ -12,14 +12,14 @@
 #include <QMimeData>
 #include <QQuickItem>
 
-
 QMediaPlayer* _player;
 QMediaPlaylist* _playlist;
 QAudioInput* audioInput;
 QQuickWidget* _quickWid;
 QAudioProbe* _probe;
 QObject* _qmlObject;
-
+QObject* _redSquare;
+QObject* _particles;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -66,10 +66,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->setAcceptDrops(true);
 
-
-
-
     _qmlObject = _quickWid->rootObject();
+    _redSquare = _qmlObject->children().at(2);
+    _particles = _qmlObject->children().at(1);
 }
 
 
@@ -85,13 +84,11 @@ void MainWindow::processBuffer(const QAudioBuffer& buf){
     int j = 0;
     int sum = 0;
 
-    qDebug() << "processbuffer";
-    while(j< 81)
+    while(j < 160)
        sum += data[j++];
 
-
-    _qmlObject->children().at(0)->setProperty("color", "blue");
-
+    _redSquare->setProperty("d", sum/160);
+    _particles->setProperty("size", sum/320);
 }
 
 void MainWindow::playNext(){

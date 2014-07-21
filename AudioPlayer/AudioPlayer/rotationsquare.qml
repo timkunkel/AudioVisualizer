@@ -5,6 +5,24 @@ Rectangle {
 
     id: root
 
+    ParticleSystem {
+        id: sys
+    }
+
+    Emitter {
+        anchors.fill: parent
+        system: sys
+        size: 1
+        ImageParticle {
+            anchors.fill: parent
+            system: sys
+            source: "green_melon_blob.png"
+            clip: true
+            id:  redblip
+        }
+        lifeSpan: 2000
+    }
+
     Rectangle {
         property int d: 100
         id: square
@@ -14,27 +32,4 @@ Rectangle {
         color: "red"
         NumberAnimation on rotation { from: 0; to: 360; duration: 2000; loops: Animation.Infinite; }
     }
-
-    Text {
-        anchors.centerIn: parent
-        text: "Qt Quick running in a widget"
-    }
-
-    ParticleSystem {
-                id: sys
-            }
-
-            Emitter {
-                anchors.fill: parent
-                system: sys
-                ImageParticle {
-                    anchors.fill: parent
-                    system: sys
-                    source: "green_melon_blob.png"
-                    clip: true
-                    id:  redblip
-                }
-
-                lifeSpan: 6000
-            }
 }
