@@ -70,16 +70,20 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
-void MainWindow::processBuffer(const QAudioBuffer& buf){
+int MainWindow::processBuffer(const QAudioBuffer& buf){
    const quint8* data = buf.data<quint8>();
    qint64 len = buf.byteCount();
    if(len > 50)
        len = 50;
+    int j = 0;
+    int sum = 0;
 
-   for (int i=0; i < len; i++ )
-       {
-     //  qDebug() << data[i];
-       }
+    while(j< 81)
+       sum += data[j++];
+
+
+   return sum/80;
+
 }
 
 void MainWindow::playNext(){
@@ -109,12 +113,10 @@ void MainWindow::loadFolder(){
 
     for(const QString& f:files)
     {
-        content.push_back(QUrl::fromLocalFile(dir.path()+"/" + f));
-        QFileInfo fi(f);
-        ui->mp3List->addItem(dir.path() + "/" + f);
+
+        _playlist->addMedia(QUrl::fromLocalFile(dir.path()+"/" + f));
+
     }
-    _playlist->addMedia(content);
-    ui->mp3List->setCurrentRow(_playlist->currentIndex() != -1? _playlist->currentIndex():0);
 }
 
 void MainWindow::loadFile() {
@@ -127,7 +129,6 @@ void MainWindow::loadFile() {
 
     _playlist->addMedia(QUrl(_fileName));
 
-    ui->mp3List->addItem(new QListWidgetItem(_fileName));
 }
 
 void MainWindow::play() {

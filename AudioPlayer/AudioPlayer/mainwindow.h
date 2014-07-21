@@ -31,7 +31,7 @@ public slots:
     void play();
     void stop();
     void changeVolume();
-    void processBuffer(const QAudioBuffer& buf);
+    int processBuffer(const QAudioBuffer& buf);
     void loadMp3();
     void loadAndPlayMp3();
     void playNext();
